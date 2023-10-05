@@ -6,13 +6,13 @@ import { ResponseUserType } from './users_api_types';
 
 export const usersApi = {
     async getUsers(): Promise<UserType[]> {
-        const { data } = await instance.get<{}, ResponseUserType>("user");
+        const { data } = await instance.get<{}, ResponseUserType<UserType[]>>("user");
         return data
 
     },
-    addUser(username: string) {
-        const newUser = instance.post("user", { username })
-        return newUser
+    async addUser(username: string) {
+        const { data } = await instance.post<{ username: string }, ResponseUserType<UserType>>("user", { username })
+        return data
     },
     updateUser({ _id, username }: UserType) {
         const updatedUser = instance.put("user", { _id, username })

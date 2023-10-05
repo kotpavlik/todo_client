@@ -1,9 +1,9 @@
 import { AxiosHeaders } from "axios";
-import { UserType } from "../../redux/Types/storeTypes";
 
-export interface ResponseUserType {
+
+export interface ResponseUserType<D> {
     config?: {}
-    data: UserType[]
+    data: D
     headers: AxiosHeaders
     request: XMLHttpRequest
     status: number

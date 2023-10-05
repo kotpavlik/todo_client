@@ -1,9 +1,10 @@
 import { AxiosError } from "axios";
 import { handleError } from "../../../common/errorUtils/errorUtilsFunc";
 import { UserType, UsersStateType } from "../../Types/storeTypes";
-import { ADD_NEW_USER, GET_ALL_USERS, GET_ALL_USERS_REQEST, REMOVE_USER, UPDATE_USER } from "../../TypesForActions/typesForActions";
+import { ADD_NEW_USER, FETCH_NEW_USER, GET_ALL_USERS, GET_ALL_USERS_REQEST, REMOVE_USER, UPDATE_USER } from "../../TypesForActions/typesForActions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { usersApi } from "../../../api/users_api/users_api";
+import { SetStatus } from "../appReducer/appReducer";
 
 
 const initialState: UsersStateType = {
@@ -41,7 +42,7 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
 };
 
 
-export type UsersReducerTypes = GetUsersType | AddNewUserType | UpdateUserType | RemoveUserType
+export type UsersReducerTypes = GetUsersType | addNewUserSucsessType | UpdateUserType | RemoveUserType
 
 type GetUsersType = ReturnType<typeof getAllUsers>
 export interface GetAllUsersACTypes {
@@ -59,14 +60,14 @@ export const getAllUsers = (users: UserType[]): GetAllUsersACTypes => {
     } as const
 }
 
-type AddNewUserType = ReturnType<typeof addNewUser>
+type addNewUserSucsessType = ReturnType<typeof addNewUserSucsess>
 export interface AddNewUserACType {
     type: typeof ADD_NEW_USER,
     payload: {
         new_user: UserType
     }
 }
-export const addNewUser = (new_user: UserType): AddNewUserACType => {
+export const addNewUserSucsess = (new_user: UserType): AddNewUserACType => {
     return {
         type: ADD_NEW_USER,
         payload: {
@@ -74,6 +75,13 @@ export const addNewUser = (new_user: UserType): AddNewUserACType => {
         }
     } as const
 }
+
+type fetchNewUserType = ReturnType<typeof fetchNewUser>
+export const fetchNewUser = (username: string) => {
+    return { type: FETCH_NEW_USER, username }
+}
+
+
 
 
 type UpdateUserType = ReturnType<typeof updateUser>
@@ -112,13 +120,16 @@ export const removeUser = (user_id: string): RemoveUserACType => {
 
 export function* getUsersSaga(): Generator<any> {
     try {
+        yield put(SetStatus('loading'))
         const users: UserType[] | any = yield call(usersApi.getUsers)
         if (!users) {
+            yield put(SetStatus('failed'))
             console.log('users not found,maybe database was dead')
         }
-        console.log(users)
-        if (users) yield put(getAllUsers(users))
-
+        if (users) {
+            yield put(SetStatus('succeeded'))
+            yield put(getAllUsers(users))
+        }
     } catch (e) {
         const err = e as Error | AxiosError
         yield handleError(err)
@@ -127,4 +138,26 @@ export function* getUsersSaga(): Generator<any> {
 
 export function* watchgetUsers() {
     yield takeEvery(GET_ALL_USERS_REQEST, getUsersSaga);
+}
+
+
+export function* addNewUserSaga({ username }: fetchNewUserType): Generator<any> {
+    try {
+        yield put(SetStatus('loading'))
+        const new_user: UserType | any = yield call(usersApi.addUser, username)
+        if (!new_user) {
+            yield put(SetStatus('failed'))
+            console.log(`The new user has not been created, this happens`)
+        }
+        if (new_user) {
+            yield put(addNewUserSucsess(new_user))
+            yield put(SetStatus('succeeded'))
+        }
+    } catch (e) {
+        const err = e as Error | AxiosError
+        yield handleError(err)
+    }
+}
+export function* watchgetAddNewuser() {
+    yield takeEvery(FETCH_NEW_USER, addNewUserSaga);
 }

@@ -1,9 +1,8 @@
 export interface UsersStateType {
     users: UserType[]
 }
-
 export interface UserType {
-    _id: string
+    _id?: string
     username: string
 }
 
