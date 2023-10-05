@@ -2,7 +2,8 @@ import { AxiosError } from "axios";
 import { handleError } from "../../../common/errorUtils/errorUtilsFunc";
 import { appInitialStateType, requestStatusType } from "../../Types/storeTypes";
 import { APP_SET_ERROR, APP_SET_INITIALIZE, APP_SET_STATUS } from "../../TypesForActions/typesForActions";
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { takeEvery, all } from 'redux-saga/effects';
+import { getUsersSaga } from "../userReducer/userReducer";
 
 const InitialState: appInitialStateType = {
     status: 'idle',
@@ -60,11 +61,17 @@ export const SetInitialaze = () => {
     } as const
 }
 
-function* setInitialize() {
+function* setInitialize(): Generator<any> {
     try {
-
+        // yield all([
+        //     call(getUsersSaga)
+        // ])
     } catch (e) {
         const err = e as Error | AxiosError
         yield handleError(err)
     }
+}
+
+export function* watchInitialize() {
+    yield takeEvery(APP_SET_INITIALIZE, setInitialize);
 }

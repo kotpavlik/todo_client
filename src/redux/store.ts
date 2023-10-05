@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import createSagaMiddleware from "redux-saga";
 import logger from "redux-logger";
 
-import { rootSaga } from "./rootSaga";
+import { rootSaga } from "./rootSaga/rootSaga";
 import { usersReducer } from "./todo/userReducer/userReducer";
 import { appReducer } from "./todo/appReducer/appReducer";
 
