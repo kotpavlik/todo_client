@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { handleError } from "../../../common/errorUtils/errorUtilsFunc";
 import { appInitialStateType, requestStatusType } from "../../Types/storeTypes";
 import { APP_SET_ERROR, APP_SET_INITIALIZE, APP_SET_STATUS } from "../../TypesForActions/typesForActions";
-import { takeEvery, all } from 'redux-saga/effects';
+import { takeEvery } from 'redux-saga/effects';
 import { getUsersSaga } from "../userReducer/userReducer";
 
 const InitialState: appInitialStateType = {
@@ -45,7 +45,7 @@ export const SetStatus = (status: requestStatusType) => {
 }
 
 type SetErrorType = ReturnType<typeof SetError>
-export const SetError = (error: string) => {
+export const SetError = (error: string | null) => {
     return {
         type: APP_SET_ERROR,
         payload: {

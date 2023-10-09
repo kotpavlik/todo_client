@@ -4,7 +4,7 @@ import { UserType, UsersStateType } from "../../Types/storeTypes";
 import { ADD_NEW_USER, FETCH_NEW_USER, GET_ALL_USERS, GET_ALL_USERS_REQEST, REMOVE_USER, UPDATE_USER } from "../../TypesForActions/typesForActions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { usersApi } from "../../../api/users_api/users_api";
-import { SetStatus } from "../appReducer/appReducer";
+import { SetError, SetStatus } from "../appReducer/appReducer";
 
 
 const initialState: UsersStateType = {
@@ -147,7 +147,6 @@ export function* addNewUserSaga({ username }: fetchNewUserType): Generator<any> 
         const new_user: UserType | any = yield call(usersApi.addUser, username)
         if (!new_user) {
             yield put(SetStatus('failed'))
-            console.log(`The new user has not been created, this happens`)
         }
         if (new_user) {
             yield put(addNewUserSucsess(new_user))
@@ -155,7 +154,9 @@ export function* addNewUserSaga({ username }: fetchNewUserType): Generator<any> 
         }
     } catch (e) {
         const err = e as Error | AxiosError
-        yield handleError(err)
+        const checkError = yield handleError(err)
+        if (checkError) yield put(SetError(checkError.toString()))
+        yield put(SetStatus('failed'))
     }
 }
 export function* watchgetAddNewuser() {

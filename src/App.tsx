@@ -1,44 +1,37 @@
 import { useDispatch } from 'react-redux';
-import './App.css';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { FETCH_NEW_USER, GET_ALL_USERS_REQEST } from './redux/TypesForActions/typesForActions';
-
+import style from './App.module.scss'
 import { useAppSelector } from './redux/store';
+import { ErrorSnackbar } from './common/errorSnackBar/errorSnackBar';
+import { Loading } from './common/lottieAnimation/loading';
+import { Users } from './components/users/Users';
 
 function App() {
 
   const dispatch = useDispatch();
-  const users = useAppSelector(state => state.users.users)
   const status = useAppSelector(state => state.app.status)
 
   useEffect(() => {
     dispatch({ type: GET_ALL_USERS_REQEST })
   }, []);
 
-  const [username, setUsername] = useState<string>('')
+  if (status === 'loading') {
+    return (
+      <Loading />
+    )
+  }
 
-  const addNewUserOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const username = e.currentTarget.value
-    setUsername(username)
-  }
-  const addNewUserHandler = (username: string) => {
-    dispatch({ type: FETCH_NEW_USER, username })
-    setUsername('')
-  }
-  console.log(status)
+
   return (
-    <div className="App">
-      <div>
-        <input onChange={(e) => addNewUserOnChange(e)} value={username} />
-        <button disabled={status === 'loading'} onClick={() => addNewUserHandler(username)}>create new user</button>
+    <>
+      <ErrorSnackbar />
+      <div className={style.app}>
+        <Users />
+
       </div>
-      Hello gay
-      {users.map((u) => {
-        return (
-          <div key={u._id}> {u.username} </div>
-        )
-      })}
-    </div>
+    </>
+
   );
 }
 

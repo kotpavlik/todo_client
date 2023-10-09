@@ -1,0 +1,49 @@
+@use '../../styles/variables';
+@import '../../styles//mixins';
+.users {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    padding: 8px;
+    justify-content: space-between;
+    .add_user {
+        margin: 20px;
+        min-width: 360px;
+        .title {
+            @include title-text;
+            text-align: start;
+        }
+    }
+    .users_list {
+        margin: 20px;
+        min-width: 360px;
+        .title {
+            text-align: end;
+            @include title-text;
+        }
+        .input {}
+        .button {}
+        .user {
+            padding: 2px;
+            margin: 4px;
+            border: 1px solid variables.$border-color;
+            background-color: #fff;
+            border-radius: 4px;
+            color: variables.$all-fonts-color;
+            text-align: center;
+            font-size: variables.$primary-font-size;
+            line-height: variables.$primary-line-height;
+            font-weight: variables.$primary-font-weight;
+            cursor: pointer;
+            transition: background-color .3s;
+            &:hover {
+                background-color: variables.$primary-color;
+                color: #fff;
+                transition: background-color .3s;
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+@use './variables';
+@mixin title-text {
+    padding: 2px;
+    margin: 4px;
+    user-select: none;
+    color: variables.$all-fonts-color;
+}
+
+;

@@ -1,14 +1,11 @@
 import axios, { AxiosError } from "axios";
-import { put } from 'redux-saga/effects';
-import { SetError } from "../../redux/todo/appReducer/appReducer";
 
 export const handleError = (err: Error | AxiosError) => {
+    console.log(err)
     if (axios.isAxiosError(err)) {
-        const error = err.response?.data ? (err.response.data as { error: string }).error : err.message
-        put(SetError(error))
+        const error: string = err.response?.data ? (err.response.data as { error: string }).error : err.message
+        return error
     } else {
-        put(SetError(
-            `Native error ${err.message}`
-        ))
+        return err.message
     }
 }
