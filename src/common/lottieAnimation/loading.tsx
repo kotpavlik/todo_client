@@ -7,7 +7,7 @@ const style: CSSProperties = {
     overflow: 'hidden',
     borderRadius: 100,
     width: 250,
-    height: 280,
+    height: 250,
     margin: '0 auto'
 };
 export const Loading = () => {

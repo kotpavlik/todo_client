@@ -18,8 +18,12 @@ export const usersApi = {
         const updatedUser = instance.put("user", { _id, username })
         return updatedUser
     },
-    removeUser(user_id: string) {
-        const deletedUser = instance.delete(`user?user_id=${user_id}`);
-        return deletedUser
+    async removeUser(user_id: string) {
+        console.log('api');
+
+        const { data } = await instance.delete<{ user_id: string }, ResponseUserType<UserType>>(`user?user_id=${user_id}`);
+        console.log(data);
+
+        return data
     }
 }

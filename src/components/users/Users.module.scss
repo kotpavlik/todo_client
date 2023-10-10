@@ -20,29 +20,53 @@
     .users_list {
         margin: 20px;
         min-width: 360px;
+        display: flex;
+        flex-direction: column;
         .title {
             text-align: end;
             @include title-text;
         }
-        .input {}
-        .button {}
-        .user {
-            padding: 2px;
-            margin: 4px;
-            border: 1px solid variables.$border-color;
-            background-color: #fff;
-            border-radius: 4px;
-            color: variables.$all-fonts-color;
-            text-align: center;
-            font-size: variables.$primary-font-size;
-            line-height: variables.$primary-line-height;
-            font-weight: variables.$primary-font-weight;
-            cursor: pointer;
-            transition: background-color .3s;
-            &:hover {
-                background-color: variables.$primary-color;
-                color: #fff;
+        .list_about_users {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            overflow: scroll;
+            max-height: 100vh;
+            .user {
+                position: relative;
+                width: 200px;
+                padding: 2px;
+                margin: 4px;
+                border: 1px solid variables.$border-color;
+                background-color: #fff;
+                border-radius: 4px;
+                color: variables.$all-fonts-color;
+                text-align: center;
+                font-size: variables.$primary-font-size;
+                line-height: variables.$primary-line-height;
+                font-weight: variables.$primary-font-weight;
+                cursor: pointer;
                 transition: background-color .3s;
+                &:hover {
+                    background-color: variables.$primary-color;
+                    color: #fff;
+                    transition: background-color .3s;
+                }
+                .remove {
+                    position: absolute;
+                    right: 2px;
+                    top: 4px;
+                    &:hover {
+                        color: rgb(255, 141, 141)
+                    }
+                    svg {
+                        transition: all .2s;
+                        &:active {
+                            transition: all .2s;
+                            color: rgb(254, 67, 67)
+                        }
+                    }
+                }
             }
         }
     }

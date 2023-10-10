@@ -4,14 +4,14 @@ import style from './primaryButton.module.scss'
 interface PrimaryButtonType {
     name: string
     disabled?: boolean
-    val?: number | string | boolean
     buttonHandler: () => void
 
 }
 
-export const PrimaryButton = ({ name, buttonHandler, disabled, val }: PrimaryButtonType) => {
+export const PrimaryButton = React.memo(({ name, buttonHandler, disabled }: PrimaryButtonType) => {
     return (
-        <button className={style.button} disabled={disabled} onClick={buttonHandler}>{name}</button>
-
+        <button type={'button'} className={style.button} disabled={disabled} onClick={buttonHandler}>
+            <span className={style.button_name}>{name}</span>
+        </button>
     );
-}
+})

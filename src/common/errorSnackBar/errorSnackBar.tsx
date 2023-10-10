@@ -22,7 +22,6 @@ export const ErrorSnackbar = () => {
         }
         dispatch(SetError(null))
     };
-    console.log(error)
     return (
         <Snackbar open={!!(error && error.length > 1 && !null)}
             autoHideDuration={5000}
