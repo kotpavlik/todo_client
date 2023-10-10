@@ -116,10 +116,6 @@ export const removeUser = (user_id: string): RemoveUserACType => {
         }
     } as const
 }
-// type fetchRemoveUserType = ReturnType<typeof fetchRemoveUser>
-// export const fetchRemoveUser = (user_id: string) => {
-//     return { type: FETCH_REMOVE_USER, user_id }
-// }
 
 
 export function* getUsersSaga(): Generator<any> {
@@ -170,11 +166,9 @@ export function* watchgetAddNewuser() {
 
 export function* removeUserSaga({ payload }: RemoveUserACType): Generator<any> {
     try {
-        console.log('saga');
 
         yield put(SetStatus('loading'))
         const remove_user: UserType | any = yield call(usersApi.removeUser, payload.user_id)
-        console.log(remove_user);
 
         if (!remove_user) {
             yield put(SetStatus('failed'))

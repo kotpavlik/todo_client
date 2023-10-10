@@ -19,11 +19,7 @@ export const usersApi = {
         return updatedUser
     },
     async removeUser(user_id: string) {
-        console.log('api');
-
         const { data } = await instance.delete<{ user_id: string }, ResponseUserType<UserType>>(`user?user_id=${user_id}`);
-        console.log(data);
-
         return data
     }
 }
