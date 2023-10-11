@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: GET_ALL_USERS_REQEST })
-  }, []);
+  }, [dispatch]);
 
 
   return (

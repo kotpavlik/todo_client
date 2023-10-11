@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from "react"
+import { ChangeEvent, useCallback, useState, KeyboardEvent } from "react"
 import { FETCH_NEW_USER, REMOVE_USER } from "../../redux/TypesForActions/typesForActions"
 import { useAppSelector } from "../../redux/store"
 import style from "./Users.module.scss"
@@ -32,14 +32,31 @@ export const Users = () => {
     const removeUserHandler = (user_id: string | undefined) => {
         if (user_id) dispatch({ type: REMOVE_USER, payload: { user_id } })
     }
-
+    const onPressEnter = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+        console.log(e.keyCode)
+        let trimUsername = username.trim();
+        if (trimUsername === 'wtf' || trimUsername === 'fuck') {
+            setUsername('');
+            alert('не ругайся')
+            return;
+        }
+        if (e.keyCode === 13) {
+            addNewUserHandler();
+        }
+    }, [username, addNewUserHandler])
 
 
     return (
         <div className={style.users}>
+            <h1 className={style.title_app}>Use the best
+                <span className={style.title_v}>
+                    TODO WEB APP
+                </span>
+                for create tasks,delete tasks, update your tasks.You can check your work time and much more 💻
+            </h1>
             <div className={style.add_user}>
-                <h1 className={style.title}>Choise or create</h1>
-                <PrimaryInput onHandleChange={addNewUserOnChange} value={username} />
+                <h1 className={style.title}>Choise or create account</h1>
+                <PrimaryInput onHandleChange={addNewUserOnChange} value={username} onKeyPress={onPressEnter} />
                 <PrimaryButton buttonHandler={addNewUserHandler} name={'add user'} />
             </div>
 

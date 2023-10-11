@@ -11,4 +11,9 @@ export const UPDATE_USER = 'USER/UPDATE_USER';
 export const REMOVE_USER = 'USER/REMOVE_USER';
 export const FETCH_NEW_USER = 'USER/FETCH_NEW_USER'
 
+export const GET_ALL_DESKS = 'GET_ALL_DESKS'
+export const GET_MY_DESKS = 'GET_MY_DESKS'
+export const UPDATE_DESK = 'UPDATE_DESK'
+export const REMOVE_DESK = 'REMOVE_DESK'
+
 

@@ -12,3 +12,14 @@ export interface appInitialStateType {
     error: string | null
     initialized: boolean
 }
+
+export interface ProjectsType {
+    projects: ProjectType[]
+}
+
+export interface ProjectType {
+    _id: string
+    project_name: string
+    tasks: string[]
+    creator: string
+}

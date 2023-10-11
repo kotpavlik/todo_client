@@ -1,6 +1,21 @@
 @use '../../styles/variables';
 @import '../../styles//mixins';
 .users {
+    .title_app {
+        font-size: 40px;
+        line-height: 56px;
+        font-weight: 600;
+        text-align: start;
+        max-width: 600px;
+        margin: 20px;
+        .title_v {
+            font-size: 40px;
+            line-height: 56px;
+            font-weight: 800;
+            margin: 5px;
+            color: variables.$primary-color;
+        }
+    }
     position: absolute;
     top: 0;
     width: 100vw;
@@ -10,10 +25,13 @@
     padding: 8px;
     justify-content: space-between;
     .add_user {
-        margin: 20px;
+        position: absolute;
+        top: calc(50% - 30px);
+        right: calc( 50% - 180px);
         min-width: 360px;
         .title {
             @include title-text;
+            font-size: 24px;
             text-align: start;
         }
     }
