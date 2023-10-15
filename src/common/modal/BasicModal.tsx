@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
-import {ReactNode} from "react";
+import { ReactNode } from "react";
 import s from './BasicModal.module.css'
 
 const style = {
@@ -12,7 +12,8 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    border: '2px solid #366EFF',
+    border: '1px solid #333',
+    borderRadius: '4px',
     boxShadow: 24,
     p: 4,
 };
@@ -24,7 +25,7 @@ type BasicModalType = {
 }
 
 
-export const BasicModal = ({children, childrenBtn, name}: BasicModalType) => {
+export const BasicModal = ({ children, childrenBtn, name }: BasicModalType) => {
 
     const [open, setOpen] = React.useState(false)
 
@@ -32,9 +33,6 @@ export const BasicModal = ({children, childrenBtn, name}: BasicModalType) => {
         setOpen(false)
     }
 
-    // const handleOpen = () => {
-    //     setOpen(true)
-    // }
 
     return (
         <div>
@@ -51,7 +49,7 @@ export const BasicModal = ({children, childrenBtn, name}: BasicModalType) => {
                 <Box sx={style}>
                     <div className={s.headerModal}>
                         {name}
-                        <CloseIcon style={{cursor: 'pointer'}} onClick={handleClose}/>
+                        <CloseIcon style={{ cursor: 'pointer' }} onClick={handleClose} />
                     </div>
                     {children(handleClose)}
                 </Box>
