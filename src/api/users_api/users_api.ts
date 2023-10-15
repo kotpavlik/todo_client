@@ -1,17 +1,17 @@
 
 import { UserType } from '../../redux/Types/storeTypes';
 import { instance } from './../api';
-import { ResponseUserType } from './users_api_types';
+import { ResponseType } from './users_api_types';
 
 
 export const usersApi = {
     async getUsers(): Promise<UserType[]> {
-        const { data } = await instance.get<{}, ResponseUserType<UserType[]>>("user");
+        const { data } = await instance.get<{}, ResponseType<UserType[]>>("user");
         return data
 
     },
     async addUser(username: string) {
-        const { data } = await instance.post<{ username: string }, ResponseUserType<UserType>>("user", { username })
+        const { data } = await instance.post<{ username: string }, ResponseType<UserType>>("user", { username })
         return data
     },
     updateUser({ _id, username }: UserType) {
@@ -19,7 +19,7 @@ export const usersApi = {
         return updatedUser
     },
     async removeUser(user_id: string) {
-        const { data } = await instance.delete<{ user_id: string }, ResponseUserType<UserType>>(`user?user_id=${user_id}`);
+        const { data } = await instance.delete<{ user_id: string }, ResponseType<UserType>>(`user?user_id=${user_id}`);
         return data
     }
 }

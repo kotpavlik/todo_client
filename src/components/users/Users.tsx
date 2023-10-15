@@ -6,18 +6,20 @@ import { PrimaryButton } from "../buttons/primary_button/primaryButton"
 import { useDispatch } from "react-redux"
 import { PrimaryInput } from "../primaryInput/primaryInput"
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import { useNavigate } from "react-router-dom"
+
+
 
 
 export const Users = () => {
 
     const dispatch = useDispatch();
     const users = useAppSelector(state => state.users.users)
+    const navigate = useNavigate()
     const [username, setUsername] = useState<string>('')
 
-
+    console.log(users)
     const addNewUserOnChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        console.log(e.currentTarget.value);
-
         const username = e.currentTarget.value
         setUsername(username)
     }, [])
@@ -45,6 +47,11 @@ export const Users = () => {
         }
     }, [username, addNewUserHandler])
 
+    const getDesksOfUser = (user_id: string) => {
+        navigate(`${user_id}`)
+
+    }
+
 
     return (
         <div className={style.users}>
@@ -67,7 +74,7 @@ export const Users = () => {
                 <div className={style.list_about_users}>
                     {users.map((u) => {
                         return (
-                            <div key={u._id} className={style.user}> {u.username}
+                            <div key={u._id} className={style.user} onClick={() => (u._id && getDesksOfUser(u._id))}> {u.username}
                                 <div className={style.remove}  >
                                     < ClearOutlinedIcon onClick={() => removeUserHandler(u._id)} fontSize={"small"} />
                                 </div>

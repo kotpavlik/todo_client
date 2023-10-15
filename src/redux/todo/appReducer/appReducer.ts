@@ -1,9 +1,11 @@
-import { AxiosError } from "axios";
+import { AxiosError, all } from "axios";
 import { handleError } from "../../../common/errorUtils/errorUtilsFunc";
 import { appInitialStateType, requestStatusType } from "../../Types/storeTypes";
 import { APP_SET_ERROR, APP_SET_INITIALIZE, APP_SET_STATUS } from "../../TypesForActions/typesForActions";
-import { takeEvery } from 'redux-saga/effects';
+import { call, takeEvery } from 'redux-saga/effects';
 import { getUsersSaga } from "../userReducer/userReducer";
+import { getAllDesksSaga } from "../projectsReducer/ProjectReducer";
+
 
 const InitialState: appInitialStateType = {
     status: 'idle',
@@ -63,10 +65,14 @@ export const SetInitialaze = () => {
 
 function* setInitialize(): Generator<any> {
     try {
-        // yield all([
-        //     call(getUsersSaga)
-        // ])
+        yield SetStatus('loading')
+        yield all([
+            call(getUsersSaga), call(getAllDesksSaga)
+        ])
+        yield SetStatus('succeeded')
+        yield SetInitialaze()
     } catch (e) {
+        yield SetStatus('failed')
         const err = e as Error | AxiosError
         yield handleError(err)
     }

@@ -119,6 +119,7 @@ export const removeUser = (user_id: string): RemoveUserACType => {
 
 
 export function* getUsersSaga(): Generator<any> {
+
     try {
         yield put(SetStatus('loading'))
         const users: UserType[] | any = yield call(usersApi.getUsers)

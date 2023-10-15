@@ -1,7 +1,7 @@
 import { AxiosHeaders } from "axios";
 
 
-export interface ResponseUserType<D> {
+export interface ResponseType<D> {
     config?: {}
     data: D
     headers: AxiosHeaders
