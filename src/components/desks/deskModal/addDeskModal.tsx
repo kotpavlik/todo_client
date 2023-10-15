@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, KeyboardEvent } from 'react';
 import style from './addDeskModal.module.scss'
 import { useFormik } from "formik";
 import { useDispatch } from 'react-redux';
@@ -37,10 +37,15 @@ export const AddNewDeskModal = ({ children, creator }: AddDeskModalType) => {
         handleClose()
     }
 
+    const onKeyChange = (e: KeyboardEvent<HTMLDivElement>, handleClose: () => void) => {
+        if (e.keyCode === 13) {
+            formik.handleSubmit()
+        }
+    }
     return (
         <BasicModal childrenBtn={children} name={'Add new desk'}>
             {(handleClose) => <form className={style.InputBlock} onSubmit={() => handlerSubmitForm(handleClose)}>
-                <TextField onChange={formik.handleChange}
+                <TextField onChange={formik.handleChange} onKeyDown={(e) => { onKeyChange(e, handleClose) }}
                     name={'project_name'} style={{ marginBottom: '20px' }} value={formik.values.project_name}
                     id="standard-basic" label="Desk name" variant="standard" />
                 <div className={style.blockBtn}>

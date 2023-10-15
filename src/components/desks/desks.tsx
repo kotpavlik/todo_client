@@ -39,9 +39,9 @@ export const Desks = () => {
             <div className={style.title}>
                 <h1 className={style.forpre}>Hello
                     <span className={style.creator_name}>{user && user[0].username}</span>
-                    it's yuor desks 🖥
-                    and You can choise desk and manage them 🕹
-                    or you can see projects of all               guys
+                    <div>it's yuor desks 🖥</div>
+                    <div>You can choise desk and manage them 🕹</div>
+
                 </h1>
             </div>
             <AddNewDeskModal creator={user_id!} >
