@@ -5,7 +5,7 @@ import axios from "axios";
 
 
 export const instance = axios.create({
-    baseURL: 'http://localhost:8080/v1/',
+    baseURL: process.env.REACT_APP_UP_TRADERS_TODO_TESTOVOE,
     withCredentials: true,
 })
 
