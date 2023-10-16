@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState, KeyboardEvent } from "react"
+import { ChangeEvent, useCallback, useState, KeyboardEvent, MouseEvent } from "react"
 import { FETCH_NEW_USER, REMOVE_USER } from "../../redux/TypesForActions/typesForActions"
 import { useAppSelector } from "../../redux/store"
 import style from "./Users.module.scss"
@@ -31,11 +31,11 @@ export const Users = () => {
         }, [username, dispatch]
     )
 
-    const removeUserHandler = (user_id: string | undefined) => {
+    const removeUserHandler = (user_id: string | undefined, e: MouseEvent<SVGSVGElement>) => {
+        e.stopPropagation()
         if (user_id) dispatch({ type: REMOVE_USER, payload: { user_id } })
     }
     const onPressEnter = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
-        console.log(e.keyCode)
         let trimUsername = username.trim();
         if (trimUsername === 'wtf' || trimUsername === 'fuck') {
             setUsername('');
@@ -76,7 +76,7 @@ export const Users = () => {
                         return (
                             <div key={u._id} className={style.user} onClick={() => (u._id && getDesksOfUser(u._id))}> {u.username}
                                 <div className={style.remove}  >
-                                    < ClearOutlinedIcon onClick={() => removeUserHandler(u._id)} fontSize={"small"} />
+                                    < ClearOutlinedIcon onClick={(e: MouseEvent<SVGSVGElement>) => removeUserHandler(u._id, e)} fontSize={"small"} />
                                 </div>
                             </div>
                         )
